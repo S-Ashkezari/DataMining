@@ -3,6 +3,8 @@ format: jb-book
 title: Feature Selection and Extraction
 root: intro
 chapters:
+  - file: Pandas  
+  - file: featureImportance
   - file: classical_methods
   - file: advanced_methods
   - file: boosting_methods
