@@ -1,9 +1,0 @@
-# Table of Contents (_toc.yml)
-format: jb-book
-title: Feature Selection and Extraction
-root: intro
-chapters:
-  - file: classical_methods
-  - file: advanced_methods
-  - file: boosting_methods
-  - file: neural_network_methods
