@@ -1,0 +1,2056 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>3. Feature Extraction (featureExtraction.ipynb) &#8212; Data Mining (Feature Selection and Extraction Methods)</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_sources/featureExtraction';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Comprehensive Guide on Feature Selection" href="comprehensive-guide-on-feature-selection.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Data Mining (Feature Selection and Extraction Methods) - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Data Mining (Feature Selection and Extraction Methods) - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="dataBaseConnection.html">نحوه اتصال به پایگاه داده در پایتون</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Pandas_kamleltarin.html">Learning Pandas from Scratch</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="featureImportance.html">Introduction to the Importance of Features in Data Mining</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="comprehensive-guide-on-feature-selection.html"><strong>Comprehensive Guide on Feature Selection</strong></a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Feature Extraction (featureExtraction.ipynb)</a></li>
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/docs/_sources/featureExtraction.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F_sources/featureExtraction.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/_sources/featureExtraction.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>3. Feature Extraction (featureExtraction.ipynb)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">3. Feature Extraction (featureExtraction.ipynb)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-extraction-methods">Feature Extraction Methods</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-extraction-linear-methods">Feature Extraction: Linear Methods</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#principal-component-analysis-pca">1. Principal Component Analysis (PCA)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation">Explanation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-steps">Key Steps</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formula">Formula</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-explanation-and-implementation-of-pca">📚Mathematical Explanation and Implementation of PCA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-steps-of-pca">Mathematical Steps of PCA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-mathematics">Step-by-Step Mathematics</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-standardize-the-data">Step 1: Standardize the Data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-compute-the-covariance-matrix">Step 2: Compute the Covariance Matrix</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-compute-eigenvalues-and-eigenvectors">Step 3: Compute Eigenvalues and Eigenvectors</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-example">Python Example:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-sort-eigenvectors-by-decreasing-eigenvalues">Step 4: Sort Eigenvectors by Decreasing Eigenvalues</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#procedure">Procedure:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Python Example:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-select-the-top-k-eigenvectors">Step 5: Select the Top <span class="math notranslate nohighlight">\(k\)</span> Eigenvectors</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-k">Choosing <span class="math notranslate nohighlight">\(k\)</span>:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Python Example:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-project-the-data">Step 6: Project the Data</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Python Example:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-7-optional-reconstruct-the-original-data-inverse-transform">Step 7: (Optional) Reconstruct the Original Data (Inverse Transform)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Python Example:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-discriminant-analysis-lda">2. Linear Discriminant Analysis (LDA)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Explanation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#goal-of-lda">Goal of LDA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Key Steps</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Formula</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-implementation">Step by step implementation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-define-mean-vectors">Step 1: Define Mean Vectors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-compute-scatter-matrices">Step 2: Compute Scatter Matrices</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#within-class-scatter-matrix-s-w">2.1. Within-class Scatter Matrix ( S_W )</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#between-class-scatter-matrix-s-b">2.2. Between-class Scatter Matrix ( S_B )</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-solve-the-generalized-eigenvalue-problem">Step 3: Solve the Generalized Eigenvalue Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-select-linear-discriminants">Step 4: Select Linear Discriminants</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#important-notes">Important Notes:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-discriminant-analysis-lda-optimization-derivation-details">Linear Discriminant Analysis (LDA) Optimization Derivation details</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective-function">Objective function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-with-direct-maximization">Problem with direct maximization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formulating-the-lagrangian">Formulating the Lagrangian</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taking-the-derivative">Taking the derivative</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generalized-eigenvalue-problem">Generalized eigenvalue problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-compute-w">How to compute <span class="math notranslate nohighlight">\( w \)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Important notes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nonlinear-methods">3. Nonlinear Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#independent-component-analysis-ica">3.1 Independent Component Analysis (ICA)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Explanation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Key Steps</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Formula</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-derivation">📘 Mathematical Derivation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ica-model-linear-mixture">1. ICA Model: Linear Mixture</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions">2. Assumptions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-centering-and-whitening">3. Preprocessing: Centering and Whitening</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-centering">a. Centering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-whitening">b. Whitening</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective-maximize-non-gaussianity">4. Objective: Maximize Non-Gaussianity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measure-of-non-gaussianity-negentropy">5. Measure of Non-Gaussianity: Negentropy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approximate-negentropy-fastica">6. Approximate Negentropy (FastICA)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fastica-algorithm-one-component">7. FastICA Algorithm (One Component)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extracting-multiple-components">8. Extracting Multiple Components</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-output">✅ Final Output</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-table">📌 Summary Table</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#isomap-and-multidimensional-scaling-mds">3.2 Isomap and Multidimensional Scaling (MDS)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Explanation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#key-steps-for-isomap">Key Steps for Isomap</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#formula-for-mds">Formula for MDS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-dimensional-scaling-mds-a-complete-example">🌐 Multi-Dimensional Scaling (MDS) – A Complete Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-mds">📌 What is MDS?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-4-cities-and-pairwise-distances">🧮 Example: 4 Cities and Pairwise Distances</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goal">🧠 Goal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-mds-works">🔍 How MDS Works</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-code-applying-mds">🛠️ Python Code: Applying MDS</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-principal-component-analysis-kernel-pca">Kernel Principal Component Analysis (Kernel PCA)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-formulation">Mathematical Formulation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nonlinear-mapping-to-feature-space">1. Nonlinear Mapping to Feature Space</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-kernel-matrix">2. Compute the Kernel Matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#center-the-kernel-matrix">3. Center the Kernel Matrix</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-actually-needs-to-be-done">📌 What Actually Needs to Be Done</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expanding-the-inner-product">🔍 Expanding the Inner Product</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-centered-kernel-matrix">✅ Final Centered Kernel Matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-this-formula-does">⚙️ What This Formula Does</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solve-the-eigenvalue-problem">4. Solve the Eigenvalue Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#project-new-data-points">5. Project New Data Points</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-kernels">Common Kernels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="feature-extraction-featureextraction-ipynb">
+<h1>3. Feature Extraction (featureExtraction.ipynb)<a class="headerlink" href="#feature-extraction-featureextraction-ipynb" title="Link to this heading">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="feature-extraction-methods">
+<h1>Feature Extraction Methods<a class="headerlink" href="#feature-extraction-methods" title="Link to this heading">#</a></h1>
+<p>Feature extraction is a key step in machine learning and data preprocessing. It transforms the data into a lower-dimensional space while retaining important information.</p>
+<p>In this notebook, we will cover:</p>
+<ol class="arabic simple">
+<li><p>Linear methods:</p>
+<ul class="simple">
+<li><p>Principal Component Analysis (PCA)</p></li>
+<li><p>Linear Discriminant Analysis (LDA)</p></li>
+</ul>
+</li>
+<li><p>Nonlinear methods:</p>
+<ul class="simple">
+<li><p>Independent Component Analysis (ICA)</p></li>
+<li><p>Isomap and Multidimensional Scaling (MDS)</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="feature-extraction-linear-methods">
+<h1>Feature Extraction: Linear Methods<a class="headerlink" href="#feature-extraction-linear-methods" title="Link to this heading">#</a></h1>
+<section id="principal-component-analysis-pca">
+<h2>1. Principal Component Analysis (PCA)<a class="headerlink" href="#principal-component-analysis-pca" title="Link to this heading">#</a></h2>
+<section id="explanation">
+<h3>Explanation<a class="headerlink" href="#explanation" title="Link to this heading">#</a></h3>
+<p>Principal Component Analysis (PCA) is a <strong>dimensionality reduction</strong> technique.<br />
+It finds new <strong>orthogonal axes</strong> (principal components) that maximize the <strong>variance</strong> in the data, allowing us to represent the data with fewer dimensions while preserving as much information (variance) as possible.</p>
+</section>
+<section id="key-steps">
+<h3>Key Steps<a class="headerlink" href="#key-steps" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Standardize the data.</p></li>
+<li><p>Compute the covariance matrix.</p></li>
+<li><p>Calculate the eigenvalues and eigenvectors of the covariance matrix.</p></li>
+<li><p>Project the data onto the top <span class="math notranslate nohighlight">\(k\)</span> eigenvectors corresponding to the largest eigenvalues.</p></li>
+</ol>
+</section>
+<section id="formula">
+<h3>Formula<a class="headerlink" href="#formula" title="Link to this heading">#</a></h3>
+<p>The PCA transformation can be expressed as:
+<span class="math notranslate nohighlight">\(Z = X W\)</span>
+Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(X\)</span>: Original data matrix (centered).</p></li>
+<li><p><span class="math notranslate nohighlight">\(W\)</span>: Matrix of eigenvectors (principal components).</p></li>
+<li><p><span class="math notranslate nohighlight">\(Z\)</span>: Transformed data in the reduced-dimensional space.</p></li>
+</ul>
+</section>
+<section id="mathematical-explanation-and-implementation-of-pca">
+<h3>📚Mathematical Explanation and Implementation of PCA<a class="headerlink" href="#mathematical-explanation-and-implementation-of-pca" title="Link to this heading">#</a></h3>
+</section>
+<hr class="docutils" />
+<section id="mathematical-steps-of-pca">
+<h3>Mathematical Steps of PCA<a class="headerlink" href="#mathematical-steps-of-pca" title="Link to this heading">#</a></h3>
+<p>Suppose we have a dataset:</p>
+<p><span class="math notranslate nohighlight">\(
+X = \{x^{(1)}, x^{(2)}, ..., x^{(n)}\}, \quad x^{(i)} \in \mathbb{R}^d
+\)</span></p>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(n\)</span> = number of samples</p></li>
+<li><p><span class="math notranslate nohighlight">\(d\)</span> = number of features.</p></li>
+</ul>
+<p>Our goal: Find a new basis <span class="math notranslate nohighlight">\(W\)</span> (a set of vectors) such that projecting <span class="math notranslate nohighlight">\(X\)</span> onto <span class="math notranslate nohighlight">\(W\)</span> maximizes the variance.</p>
+</section>
+<hr class="docutils" />
+<section id="step-by-step-mathematics">
+<h3>Step-by-Step Mathematics<a class="headerlink" href="#step-by-step-mathematics" title="Link to this heading">#</a></h3>
+<section id="step-1-standardize-the-data">
+<h4>Step 1: Standardize the Data<a class="headerlink" href="#step-1-standardize-the-data" title="Link to this heading">#</a></h4>
+<p>First, we <strong>center</strong> the data (mean = 0):</p>
+<p><span class="math notranslate nohighlight">\(
+\mu = \frac{1}{n} \sum_{i=1}^{n} x^{(i)}
+\)</span>
+<span class="math notranslate nohighlight">\(
+\tilde{x}^{(i)} = x^{(i)} - \mu
+\)</span></p>
+<p>Thus, our centered matrix:</p>
+<p><span class="math notranslate nohighlight">\(
+\tilde{X} = X - \mu
+\)</span></p>
+<p>Example in Python:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">X_centered</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">mu</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="step-2-compute-the-covariance-matrix">
+<h4>Step 2: Compute the Covariance Matrix<a class="headerlink" href="#step-2-compute-the-covariance-matrix" title="Link to this heading">#</a></h4>
+<p>The <strong>covariance matrix</strong> captures how much two features vary together.</p>
+<p>Mathematically:</p>
+<p><span class="math notranslate nohighlight">\(
+\text{Cov}(X) = \frac{1}{n-1} \tilde{X}^T \tilde{X}
+\)</span></p>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( \tilde{X} \)</span> is the mean-centered data.</p></li>
+<li><p><span class="math notranslate nohighlight">\( n \)</span> is the number of samples.</p></li>
+</ul>
+<p><strong>Python Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cov_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">X_centered</span><span class="p">,</span> <span class="n">rowvar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="step-3-compute-eigenvalues-and-eigenvectors">
+<h4>Step 3: Compute Eigenvalues and Eigenvectors<a class="headerlink" href="#step-3-compute-eigenvalues-and-eigenvectors" title="Link to this heading">#</a></h4>
+<p>After obtaining the covariance matrix, the next step is to compute its <strong>eigenvalues</strong> and <strong>eigenvectors</strong>.</p>
+<p>We solve the eigenvalue problem:</p>
+<p><span class="math notranslate nohighlight">\(
+\text{Cov}(X) \, v = \lambda \, v
+\)</span></p>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( v \)</span> = eigenvector (direction of principal component),</p></li>
+<li><p><span class="math notranslate nohighlight">\( \lambda\)</span> = eigenvalue (amount of variance along <span class="math notranslate nohighlight">\( v \)</span>).</p></li>
+</ul>
+<p>Each eigenvector points in a direction where the data varies the most, and the corresponding eigenvalue tells us how much variance is in that direction.</p>
+</section>
+</section>
+<section id="python-example">
+<h3>Python Example:<a class="headerlink" href="#python-example" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">eigenvalues</span><span class="p">,</span> <span class="n">eigenvectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">cov_matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<section id="step-4-sort-eigenvectors-by-decreasing-eigenvalues">
+<h4>Step 4: Sort Eigenvectors by Decreasing Eigenvalues<a class="headerlink" href="#step-4-sort-eigenvectors-by-decreasing-eigenvalues" title="Link to this heading">#</a></h4>
+<p>After computing eigenvalues and eigenvectors, we need to <strong>sort</strong> them in order of <strong>decreasing eigenvalues</strong>.</p>
+<ul class="simple">
+<li><p><strong>Why?</strong><br />
+Eigenvalues indicate the amount of variance explained by each principal component.<br />
+We want the principal components that explain the most variance first.</p></li>
+</ul>
+</section>
+</section>
+<section id="procedure">
+<h3>Procedure:<a class="headerlink" href="#procedure" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Sort the eigenvalues from largest to smallest.</p></li>
+<li><p>Reorder the eigenvectors to match the sorted eigenvalues.</p></li>
+</ol>
+</section>
+<section id="id1">
+<h3>Python Example:<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sort eigenvalues and eigenvectors</span>
+<span class="n">sorted_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Indices for sorting in descending order</span>
+<span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">eigenvalues</span><span class="p">[</span><span class="n">sorted_idx</span><span class="p">]</span>
+<span class="n">eigenvectors</span> <span class="o">=</span> <span class="n">eigenvectors</span><span class="p">[:,</span> <span class="n">sorted_idx</span><span class="p">]</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<section id="step-5-select-the-top-k-eigenvectors">
+<h4>Step 5: Select the Top <span class="math notranslate nohighlight">\(k\)</span> Eigenvectors<a class="headerlink" href="#step-5-select-the-top-k-eigenvectors" title="Link to this heading">#</a></h4>
+<p>After sorting, we choose the top <span class="math notranslate nohighlight">\(k\)</span> eigenvectors corresponding to the largest <span class="math notranslate nohighlight">\(k\)</span> eigenvalues.</p>
+<ul class="simple">
+<li><p><strong>Why?</strong><br />
+These <span class="math notranslate nohighlight">\(k\)</span> eigenvectors form a new basis that captures most of the variance in the data with fewer dimensions.</p></li>
+</ul>
+<p>We construct the <strong>projection matrix</strong> <span class="math notranslate nohighlight">\( W \)</span>:</p>
+<p><span class="math notranslate nohighlight">\(
+W = [v_1, v_2, \dots, v_k]
+\)</span></p>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( v_i\)</span> are the selected eigenvectors,</p></li>
+<li><p><span class="math notranslate nohighlight">\( W \in \mathbb{R}^{d \times k} \)</span> (d = original number of features, k = reduced dimension).</p></li>
+</ul>
+</section>
+</section>
+<section id="choosing-k">
+<h3>Choosing <span class="math notranslate nohighlight">\(k\)</span>:<a class="headerlink" href="#choosing-k" title="Link to this heading">#</a></h3>
+<p>You can choose <span class="math notranslate nohighlight">\(k\)</span> based on:</p>
+<ul class="simple">
+<li><p>A fixed number (e.g., <span class="math notranslate nohighlight">\(k=2\)</span> for visualization).</p></li>
+<li><p>The percentage of variance you want to retain.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>Python Example:<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Number of principal components to keep</span>
+<span class="n">W</span> <span class="o">=</span> <span class="n">eigenvectors</span><span class="p">[:,</span> <span class="p">:</span><span class="n">k</span><span class="p">]</span>  <span class="c1"># Take the first k eigenvectors</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<section id="step-6-project-the-data">
+<h4>Step 6: Project the Data<a class="headerlink" href="#step-6-project-the-data" title="Link to this heading">#</a></h4>
+<p>Finally, we project the original <strong>mean-centered</strong> data onto the new <span class="math notranslate nohighlight">\(k\)</span>-dimensional space.</p>
+<p>The projection is computed as:</p>
+<p><span class="math notranslate nohighlight">\(
+Z = \tilde{X} W
+\)</span></p>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( \tilde{X} \)</span> is the mean-centered data matrix,</p></li>
+<li><p><span class="math notranslate nohighlight">\( W \)</span> is the matrix of the top (k) eigenvectors,</p></li>
+<li><p><span class="math notranslate nohighlight">\( Z \)</span> is the transformed data in (k)-dimensions.</p></li>
+</ul>
+</section>
+</section>
+<section id="id3">
+<h3>Python Example:<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_pca</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X_centered</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now, X_pca contains the data represented in the reduced k-dimensional space!</p>
+<p>Each row of X_pca is a new representation of the original sample.</p>
+<p>PCA has reduced the dimensionality while preserving as much variance as possible.</p>
+<hr class="docutils" />
+<section id="step-7-optional-reconstruct-the-original-data-inverse-transform">
+<h4>Step 7: (Optional) Reconstruct the Original Data (Inverse Transform)<a class="headerlink" href="#step-7-optional-reconstruct-the-original-data-inverse-transform" title="Link to this heading">#</a></h4>
+<p>Sometimes, after reducing the dimensions, you might want to <strong>reconstruct</strong> an approximation of the original data using the reduced features.</p>
+<p>The reconstruction is done by:</p>
+<p><span class="math notranslate nohighlight">\(
+\tilde{X}_{\text{approx}} = Z W^T
+\)</span></p>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(Z\)</span> is the low-dimensional data obtained after projection,</p></li>
+<li><p><span class="math notranslate nohighlight">\( W^T \)</span> is the transpose of the matrix of top eigenvectors.</p></li>
+</ul>
+<p>To get the data in the original scale (before centering), add back the mean:</p>
+<p><span class="math notranslate nohighlight">\(
+X_{\text{reconstructed}} = \tilde{X}_{\text{approx}} + \mu
+\)</span></p>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( \mu \)</span> is the mean vector that was subtracted during centering.</p></li>
+</ul>
+</section>
+</section>
+<section id="id4">
+<h3>Python Example:<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Approximate the original centered data</span>
+<span class="n">X_approx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X_pca</span><span class="p">,</span> <span class="n">W</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+<span class="c1"># Recover the original data by adding the mean</span>
+<span class="n">X_reconstructed</span> <span class="o">=</span> <span class="n">X_approx</span> <span class="o">+</span> <span class="n">X_mean</span>
+
+<span class="n">Note</span><span class="p">:</span> <span class="n">The</span> <span class="n">reconstructed</span> <span class="n">data</span> <span class="n">will</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">exactly</span> <span class="n">the</span> <span class="n">same</span> <span class="k">as</span> <span class="n">the</span> <span class="n">original</span> <span class="n">unless</span> <span class="nb">all</span> <span class="n">components</span> <span class="n">are</span> <span class="n">used</span><span class="err">!</span>
+</pre></div>
+</div>
+</section>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h3>
+<p>Below is an example of applying PCA on synthetic data and visualizing the results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Generate synthetic data</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Original Data&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;feature 1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;feature 2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># Apply PCA</span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">X_pca</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Plot results</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_pca</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_pca</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;PCA Projection&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Principal Component 1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Principal Component 2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/8a6ff1b11de48136752533c07f142280dc8e3c4fb09892be3a42b68aa8c51e09.png" src="../_images/8a6ff1b11de48136752533c07f142280dc8e3c4fb09892be3a42b68aa8c51e09.png" />
+<img alt="../_images/304d9a73d5a73340eba55430c09368eb314fdc98545247a19a7bc33e5b374530.png" src="../_images/304d9a73d5a73340eba55430c09368eb314fdc98545247a19a7bc33e5b374530.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># تعداد نقاط</span>
+<span class="n">width</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># عرض مستطیل</span>
+<span class="n">height</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># ارتفاع مستطیل</span>
+<span class="n">rotation_angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span>  <span class="c1"># زاویه چرخش (مثلاً 30 درجه)</span>
+
+<span class="c1"># تولید نقاط در محدوده مستطیل</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">height</span> <span class="p">,</span> <span class="n">height</span> <span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span>
+
+<span class="n">rect_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+
+<span class="c1"># ایجاد ماتریس چرخش</span>
+<span class="n">rotation_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rotation_angle</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rotation_angle</span><span class="p">)],</span>
+    <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rotation_angle</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rotation_angle</span><span class="p">)]</span>
+<span class="p">])</span>
+
+<span class="c1"># اعمال چرخش روی نقاط مستطیل</span>
+<span class="n">rotated_data</span> <span class="o">=</span> <span class="n">rect_data</span> <span class="o">@</span> <span class="n">rotation_matrix</span><span class="o">.</span><span class="n">T</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">rotated_data</span>
+<span class="c1">#data_scaled = scaler.fit_transform(data)</span>
+
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">pca_result</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+
+<span class="n">principal_components</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">components_</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">pca_result</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">pca_result</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data Points&#39;</span><span class="p">)</span>
+<span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,))</span>  
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">principal_components</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">principal_components</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">principal_components</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Principal Component 1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Principal Component 2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;PCA - Principal Components&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e244ddef9aa601e5d76936292e78e07c5944e958d03bf4e30fb931089ad2d62b.png" src="../_images/e244ddef9aa601e5d76936292e78e07c5944e958d03bf4e30fb931089ad2d62b.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="linear-discriminant-analysis-lda">
+<h2>2. Linear Discriminant Analysis (LDA)<a class="headerlink" href="#linear-discriminant-analysis-lda" title="Link to this heading">#</a></h2>
+<section id="id5">
+<h3>Explanation<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<p>Linear Discriminant Analysis (LDA) is a supervised dimensionality reduction technique. It aims to maximize the separation between multiple classes by projecting the data onto a lower-dimensional space.</p>
+</section>
+<section id="goal-of-lda">
+<h3>Goal of LDA<a class="headerlink" href="#goal-of-lda" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Find a projection vector <span class="math notranslate nohighlight">\( w \)</span> that <strong>maximizes the separation between classes</strong>.</p></li>
+<li><p>Project the data onto <span class="math notranslate nohighlight">\( w \)</span> so that:</p>
+<ul>
+<li><p>The <strong>between-class variance</strong> is <strong>maximized</strong>.</p></li>
+<li><p>The <strong>within-class variance</strong> is <strong>minimized</strong>.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id6">
+<h3>Key Steps<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Compute the within-class scatter matrix (<span class="math notranslate nohighlight">\(S_W\)</span>).</p></li>
+<li><p>Compute the between-class scatter matrix (<span class="math notranslate nohighlight">\(S_B\)</span>).</p></li>
+<li><p>Find the eigenvalues and eigenvectors of <span class="math notranslate nohighlight">\(S_W^{-1} S_B\)</span>.</p></li>
+<li><p>Select the top eigenvectors for projection.</p></li>
+</ol>
+</section>
+<section id="id7">
+<h3>Formula<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>The optimal projection matrix <span class="math notranslate nohighlight">\(W\)</span> is given by:
+<span class="math notranslate nohighlight">\(W = \text{argmax}_W \frac{|W^T S_B W|}{|W^T S_W W|}
+\)</span>
+Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(S_W\)</span>: Within-class scatter matrix.</p></li>
+<li><p><span class="math notranslate nohighlight">\(S_B\)</span>: Between-class scatter matrix.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="step-by-step-implementation">
+<h2>Step by step implementation<a class="headerlink" href="#step-by-step-implementation" title="Link to this heading">#</a></h2>
+<section id="step-1-define-mean-vectors">
+<h3>Step 1: Define Mean Vectors<a class="headerlink" href="#step-1-define-mean-vectors" title="Link to this heading">#</a></h3>
+<p>For each class <span class="math notranslate nohighlight">\( i\)</span>, compute the <strong>mean vector</strong>:</p>
+<p><span class="math notranslate nohighlight">\(
+\mu_i = \frac{1}{N_i} \sum_{x \in C_i} x
+\)</span></p>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( \mu_i \)</span> = mean of class <span class="math notranslate nohighlight">\(i \)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\( N_i \)</span> = number of samples in class $ i $,</p></li>
+<li><p><span class="math notranslate nohighlight">\( C_i \)</span> = set of samples belonging to class <span class="math notranslate nohighlight">\( i\)</span>.</p></li>
+</ul>
+<p>Also, compute the <strong>overall mean</strong>:</p>
+<p><span class="math notranslate nohighlight">\(
+\mu = \frac{1}{N} \sum_{i=1}^c \sum_{x \in C_i} x
+\)</span></p>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( N\)</span> = total number of samples,</p></li>
+<li><p><span class="math notranslate nohighlight">\( c \)</span> = number of classes.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="step-2-compute-scatter-matrices">
+<h3>Step 2: Compute Scatter Matrices<a class="headerlink" href="#step-2-compute-scatter-matrices" title="Link to this heading">#</a></h3>
+<section id="within-class-scatter-matrix-s-w">
+<h4>2.1. Within-class Scatter Matrix ( S_W )<a class="headerlink" href="#within-class-scatter-matrix-s-w" title="Link to this heading">#</a></h4>
+<p>Measures the scatter <strong>inside</strong> each class:</p>
+<p><span class="math notranslate nohighlight">\(
+S_W = \sum_{i=1}^c \sum_{x \in C_i} (x - \mu_i)(x - \mu_i)^T
+\)</span></p>
+<ul class="simple">
+<li><p>Sum of covariance matrices of each class.</p></li>
+</ul>
+</section>
+<section id="between-class-scatter-matrix-s-b">
+<h4>2.2. Between-class Scatter Matrix ( S_B )<a class="headerlink" href="#between-class-scatter-matrix-s-b" title="Link to this heading">#</a></h4>
+<p>Measures the scatter <strong>between</strong> the class means:</p>
+<p><span class="math notranslate nohighlight">\(
+S_B = \sum_{i=1}^c N_i (\mu_i - \mu)(\mu_i - \mu)^T
+\)</span></p>
+<ul class="simple">
+<li><p>Weighted by the number of samples in each class.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="step-3-solve-the-generalized-eigenvalue-problem">
+<h3>Step 3: Solve the Generalized Eigenvalue Problem<a class="headerlink" href="#step-3-solve-the-generalized-eigenvalue-problem" title="Link to this heading">#</a></h3>
+<p>We want to maximize the <strong>ratio</strong> of the between-class scatter to the within-class scatter:</p>
+<p><span class="math notranslate nohighlight">\(
+\text{Objective:} \quad \max_w \frac{w^T S_B w}{w^T S_W w}
+\)</span></p>
+<p>This leads to the <strong>generalized eigenvalue problem</strong>:</p>
+<p><span class="math notranslate nohighlight">\(
+S_W^{-1} S_B w = \lambda w
+\)</span></p>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( \lambda \)</span> are eigenvalues,</p></li>
+<li><p><span class="math notranslate nohighlight">\( w \)</span> are the corresponding eigenvectors.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="step-4-select-linear-discriminants">
+<h3>Step 4: Select Linear Discriminants<a class="headerlink" href="#step-4-select-linear-discriminants" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Sort the eigenvectors by decreasing eigenvalues.</p></li>
+<li><p>Select the top <span class="math notranslate nohighlight">\( k \)</span> eigenvectors to form the transformation matrix <span class="math notranslate nohighlight">\( W\)</span>.</p></li>
+</ul>
+<p>The new reduced feature space is:</p>
+<p><span class="math notranslate nohighlight">\(
+Z = X W
+\)</span></p>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( X\)</span> = data matrix,</p></li>
+<li><p><span class="math notranslate nohighlight">\(W \)</span> = selected eigenvectors (linear discriminates),</p></li>
+<li><p><span class="math notranslate nohighlight">\( Z\)</span> = transformed data in lower dimensions.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="important-notes">
+<h2>Important Notes:<a class="headerlink" href="#important-notes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>PCA vs LDA</strong>:</p>
+<ul>
+<li><p>PCA is unsupervised; it maximizes total variance without using labels.</p></li>
+<li><p>LDA is supervised; it tries to maximize separability between known classes.</p></li>
+</ul>
+</li>
+<li><p>In <strong>binary classification</strong> (2 classes), LDA reduces the data to <strong>1 dimension</strong>.</p></li>
+</ul>
+<p><img alt="pca_lda" src="../_images/pca_lda.png" /></p>
+<section id="linear-discriminant-analysis-lda-optimization-derivation-details">
+<h3>Linear Discriminant Analysis (LDA) Optimization Derivation details<a class="headerlink" href="#linear-discriminant-analysis-lda-optimization-derivation-details" title="Link to this heading">#</a></h3>
+</section>
+</section>
+<section id="objective-function">
+<h2>Objective function<a class="headerlink" href="#objective-function" title="Link to this heading">#</a></h2>
+<p>In LDA, the goal is to find a projection vector ( w ) that maximizes the ratio of between-class scatter to within-class scatter:</p>
+<p><span class="math notranslate nohighlight">\(
+J(w) = \frac{w^T S_B w}{w^T S_W w}
+\)</span></p>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( S_B \)</span> is the between-class scatter matrix,</p></li>
+<li><p><span class="math notranslate nohighlight">\( S_W \)</span> is the within-class scatter matrix.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="problem-with-direct-maximization">
+<h2>Problem with direct maximization<a class="headerlink" href="#problem-with-direct-maximization" title="Link to this heading">#</a></h2>
+<p>Directly maximizing <span class="math notranslate nohighlight">\( w^T S_B w\)</span> is not meaningful because <span class="math notranslate nohighlight">\( w \)</span> can be scaled arbitrarily to make <span class="math notranslate nohighlight">\( J(w)\)</span> infinite.<br />
+Thus, we impose a constraint to make the problem well-posed:</p>
+<p><span class="math notranslate nohighlight">\(
+w^T S_W w = 1
+\)</span></p>
+</section>
+<hr class="docutils" />
+<section id="formulating-the-lagrangian">
+<h2>Formulating the Lagrangian<a class="headerlink" href="#formulating-the-lagrangian" title="Link to this heading">#</a></h2>
+<p>We set up the constrained optimization using a Lagrangian function:</p>
+<p><span class="math notranslate nohighlight">\(
+\mathcal{L}(w, \lambda) = w^T S_B w - \lambda (w^T S_W w - 1)
+\)</span></p>
+<p>where <span class="math notranslate nohighlight">\( \lambda \)</span> is the Lagrange multiplier.</p>
+</section>
+<hr class="docutils" />
+<section id="taking-the-derivative">
+<h2>Taking the derivative<a class="headerlink" href="#taking-the-derivative" title="Link to this heading">#</a></h2>
+<p>We differentiate <span class="math notranslate nohighlight">\( \mathcal{L} \)</span>with respect to <span class="math notranslate nohighlight">\( w \)</span> and set the derivative equal to zero:</p>
+<p><span class="math notranslate nohighlight">\(
+\frac{\partial \mathcal{L}}{\partial w} = 2 S_B w - 2 \lambda S_W w = 0
+\)</span></p>
+<p>Dividing through by 2:</p>
+<p><span class="math notranslate nohighlight">\(
+S_B w = \lambda S_W w
+\)</span></p>
+</section>
+<hr class="docutils" />
+<section id="generalized-eigenvalue-problem">
+<h2>Generalized eigenvalue problem<a class="headerlink" href="#generalized-eigenvalue-problem" title="Link to this heading">#</a></h2>
+<p>Rearranging the equation:</p>
+<p><span class="math notranslate nohighlight">\(
+S_W^{-1} S_B w = \lambda w
+\)</span></p>
+<p>Thus, we have a <strong>generalized eigenvalue problem</strong> where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(w \)</span> are the eigenvectors,</p></li>
+<li><p><span class="math notranslate nohighlight">\( \lambda\)</span> are the eigenvalues.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="how-to-compute-w">
+<h2>How to compute <span class="math notranslate nohighlight">\( w \)</span><a class="headerlink" href="#how-to-compute-w" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Compute the scatter matrices <span class="math notranslate nohighlight">\( S_W \)</span> and <span class="math notranslate nohighlight">\( S_B \)</span> from the data.</p></li>
+<li><p>Solve the eigenvalue problem:</p></li>
+</ol>
+<p><span class="math notranslate nohighlight">\(
+S_W^{-1} S_B w = \lambda w
+\)</span></p>
+<ol class="arabic simple" start="3">
+<li><p>Select the eigenvectors <span class="math notranslate nohighlight">\( w \)</span> corresponding to the largest eigenvalues <span class="math notranslate nohighlight">\( \lambda\)</span>.</p></li>
+<li><p>Use these eigenvectors as the new axes (discriminant directions) for projection.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="id8">
+<h2>Important notes<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>In binary classification (2 classes), there is at most <strong>one</strong> discriminant direction.</p></li>
+<li><p>In general, for <span class="math notranslate nohighlight">\( c \)</span> classes, LDA provides up to <span class="math notranslate nohighlight">\( c - 1 \)</span> discriminant directions.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.discriminant_analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearDiscriminantAnalysis</span> <span class="k">as</span> <span class="n">LDA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_classification</span>
+
+<span class="c1"># Generate synthetic data</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Apply LDA</span>
+<span class="n">lda</span> <span class="o">=</span> <span class="n">LDA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">X_lda</span> <span class="o">=</span> <span class="n">lda</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Plot results</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_lda</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_lda</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;LDA Projection&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Linear Discriminant 1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a95e82644868d6db2e2aebc77bebfb2797dfb6f57e8dfb87e20cbb83da9b54ec.png" src="../_images/a95e82644868d6db2e2aebc77bebfb2797dfb6f57e8dfb87e20cbb83da9b54ec.png" />
+</div>
+</div>
+</section>
+<section id="nonlinear-methods">
+<h2>3. Nonlinear Methods<a class="headerlink" href="#nonlinear-methods" title="Link to this heading">#</a></h2>
+<p>Nonlinear methods are used for dimensionality reduction when the data lies on a nonlinear manifold. These techniques aim to preserve the intrinsic structure of the data in a lower-dimensional space.</p>
+<hr class="docutils" />
+<section id="independent-component-analysis-ica">
+<h3>3.1 Independent Component Analysis (ICA)<a class="headerlink" href="#independent-component-analysis-ica" title="Link to this heading">#</a></h3>
+<section id="id9">
+<h4>Explanation<a class="headerlink" href="#id9" title="Link to this heading">#</a></h4>
+<p>Independent Component Analysis (ICA) is a technique used to separate multivariate signals into additive subcomponents. It assumes that the subcomponents are <strong>non-Gaussian and statistically independent</strong>. ICA is widely used in applications like source separation (e.g., separating audio signals).</p>
+<center>
+<img src = "images/ica.png"  width = "700"/>
+</center>
+</section>
+<section id="id10">
+<h4>Key Steps<a class="headerlink" href="#id10" title="Link to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p>Center and whiten the data.</p></li>
+<li><p>Maximize the statistical independence of components using measures like kurtosis or negentropy.</p></li>
+<li><p>Extract the independent components.</p></li>
+</ol>
+</section>
+<section id="id11">
+<h4>Formula<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
+<p>The ICA model can be represented as:
+[
+X = AS
+]
+Where:</p>
+<ul class="simple">
+<li><p>(X): Observed data matrix.</p></li>
+<li><p>(A): Mixing matrix.</p></li>
+<li><p>(S): Independent components.</p></li>
+</ul>
+<p>The goal is to estimate (S) and (A) such that the components in (S) are independent.</p>
+</section>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="mathematical-derivation">
+<h1>📘 Mathematical Derivation<a class="headerlink" href="#mathematical-derivation" title="Link to this heading">#</a></h1>
+<section id="ica-model-linear-mixture">
+<h2>1. ICA Model: Linear Mixture<a class="headerlink" href="#ica-model-linear-mixture" title="Link to this heading">#</a></h2>
+<p>We assume we observe <strong>mixed signals</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x} = \mathbf{A} \mathbf{s}
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( \mathbf{x} \in \mathbb{R}^n \)</span>: observed (mixed) signals</p></li>
+<li><p><span class="math notranslate nohighlight">\( \mathbf{s} \in \mathbb{R}^n \)</span>: unknown source signals (statistically independent)</p></li>
+<li><p><span class="math notranslate nohighlight">\( \mathbf{A} \in \mathbb{R}^{n \times n} \)</span>: unknown mixing matrix</p></li>
+</ul>
+<p><strong>Goal</strong>: Estimate an unmixing matrix <span class="math notranslate nohighlight">\( \mathbf{W} \approx \mathbf{A}^{-1} \)</span>, such that:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\mathbf{s}} = \mathbf{W} \mathbf{x}
+\]</div>
+</section>
+<hr class="docutils" />
+<section id="assumptions">
+<h2>2. Assumptions<a class="headerlink" href="#assumptions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The sources <span class="math notranslate nohighlight">\(s_i\)</span> are statistically <strong>independent</strong>.</p></li>
+<li><p>At most one source can be <strong>Gaussian</strong> (for identifiability).</p></li>
+<li><p>The mixing is <strong>linear and instantaneous</strong>.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="preprocessing-centering-and-whitening">
+<h2>3. Preprocessing: Centering and Whitening<a class="headerlink" href="#preprocessing-centering-and-whitening" title="Link to this heading">#</a></h2>
+<section id="a-centering">
+<h3>a. Centering<a class="headerlink" href="#a-centering" title="Link to this heading">#</a></h3>
+<p>Subtract the mean of <span class="math notranslate nohighlight">\( \mathbf{x} \)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}_{\text{centered}} = \mathbf{x} - \mathbb{E}[\mathbf{x}]
+\]</div>
+</section>
+<section id="b-whitening">
+<h3>b. Whitening<a class="headerlink" href="#b-whitening" title="Link to this heading">#</a></h3>
+<p>We transform <span class="math notranslate nohighlight">\( \mathbf{x} \)</span> so its components are uncorrelated and have unit variance.</p>
+<ol class="arabic simple">
+<li><p>Covariance matrix:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{C}_x = \mathbb{E}[\mathbf{x} \mathbf{x}^\top]
+\]</div>
+<ol class="arabic simple" start="2">
+<li><p>Eigen-decomposition:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{C}_x = \mathbf{E} \mathbf{D} \mathbf{E}^\top
+\]</div>
+<ol class="arabic simple" start="3">
+<li><p>Whitening transform:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{z} = \mathbf{D}^{-1/2} \mathbf{E}^\top \mathbf{x}
+\]</div>
+<p>Now:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}[\mathbf{z} \mathbf{z}^\top] = \mathbf{I}
+\]</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="objective-maximize-non-gaussianity">
+<h2>4. Objective: Maximize Non-Gaussianity<a class="headerlink" href="#objective-maximize-non-gaussianity" title="Link to this heading">#</a></h2>
+<p>According to the <strong>central limit theorem</strong>, a sum of independent variables is more Gaussian. So, <strong>to find independent components</strong>, we <strong>maximize non-Gaussianity</strong>.</p>
+</section>
+<hr class="docutils" />
+<section id="measure-of-non-gaussianity-negentropy">
+<h2>5. Measure of Non-Gaussianity: Negentropy<a class="headerlink" href="#measure-of-non-gaussianity-negentropy" title="Link to this heading">#</a></h2>
+<p>Differential entropy:</p>
+<div class="math notranslate nohighlight">
+\[
+H(y) = -\int p(y) \log p(y) \, dy
+\]</div>
+<p>Negentropy:</p>
+<div class="math notranslate nohighlight">
+\[
+J(y) = H(y_{\text{gauss}}) - H(y)
+\]</div>
+<p>Where <span class="math notranslate nohighlight">\( y_{\text{gauss}} \)</span> is a Gaussian variable with the same variance as ( y ).<br />
+Negentropy is always non-negative and zero only for Gaussian variables.</p>
+</section>
+<hr class="docutils" />
+<section id="approximate-negentropy-fastica">
+<h2>6. Approximate Negentropy (FastICA)<a class="headerlink" href="#approximate-negentropy-fastica" title="Link to this heading">#</a></h2>
+<p>Instead of computing entropy directly, use a contrast function:</p>
+<div class="math notranslate nohighlight">
+\[
+J(y) \approx \left[\mathbb{E}[G(y)] - \mathbb{E}[G(\nu)]\right]^2
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( \nu \sim \mathcal{N}(0,1) \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( G(u) \)</span> is a non-quadratic function such as:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\( G_1(u) = \frac{1}{a} \log \cosh(a u) \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( G_2(u) = -\exp(-u^2 / 2) \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( G_3(u) = \frac{u^4}{4} \)</span></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="fastica-algorithm-one-component">
+<h2>7. FastICA Algorithm (One Component)<a class="headerlink" href="#fastica-algorithm-one-component" title="Link to this heading">#</a></h2>
+<p>Let <span class="math notranslate nohighlight">\( \mathbf{w} \)</span> be the weight vector.</p>
+<ol class="arabic simple">
+<li><p>Initialize <span class="math notranslate nohighlight">\( \mathbf{w} \)</span> randomly.</p></li>
+<li><p>Iterate until convergence:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{w}_{\text{new}} = \mathbb{E}[\mathbf{z} g(\mathbf{w}^\top \mathbf{z})] - \mathbb{E}[g'(\mathbf{w}^\top \mathbf{z})] \mathbf{w}
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( g(u) = G'(u)\)</span> is the derivative of contrast function</p></li>
+</ul>
+<ol class="arabic simple" start="3">
+<li><p>Normalize:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{w}_{\text{new}} \leftarrow \frac{\mathbf{w}_{\text{new}}}{\|\mathbf{w}_{\text{new}}\|}
+\]</div>
+<ol class="arabic simple" start="4">
+<li><p>Check convergence (e.g., <span class="math notranslate nohighlight">\( |\mathbf{w}^\top \mathbf{w}_{\text{new}}| \approx 1 \)</span>)</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="extracting-multiple-components">
+<h2>8. Extracting Multiple Components<a class="headerlink" href="#extracting-multiple-components" title="Link to this heading">#</a></h2>
+<p>To find multiple vectors <span class="math notranslate nohighlight">\(\mathbf{w}_1, \dots, \mathbf{w}_n \)</span>, use <strong>deflation</strong> or <strong>symmetric decorrelation</strong>:</p>
+<ul class="simple">
+<li><p>Decorrelate using Gram-Schmidt</p></li>
+<li><p>Or ensure <span class="math notranslate nohighlight">\( \mathbf{W} \mathbf{W}^\top = \mathbf{I} \)</span> after each iteration</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="final-output">
+<h2>✅ Final Output<a class="headerlink" href="#final-output" title="Link to this heading">#</a></h2>
+<p>The estimated sources:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\mathbf{s}} = \mathbf{W} \mathbf{z}
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( \mathbf{z} \)</span>: whitened signal</p></li>
+<li><p><span class="math notranslate nohighlight">\( \mathbf{W} \)</span>: matrix of demixing vectors</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="summary-table">
+<h2>📌 Summary Table<a class="headerlink" href="#summary-table" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Step</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>Model: <span class="math notranslate nohighlight">\( \mathbf{x} = \mathbf{A} \mathbf{s} \)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>Assumptions: independence, non-Gaussianity</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Preprocessing: centering and whitening</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>Objective: maximize non-Gaussianity</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>Measure: negentropy or contrast functions</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>Optimization via FastICA</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>Extract multiple components</p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>Final sources: <span class="math notranslate nohighlight">\( \hat{\mathbf{s}} = \mathbf{W} \mathbf{z} \)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<section id="id12">
+<h3>Example<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<p>Below is an example of applying ICA to separate mixed signals:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastICA</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Generate synthetic signals</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">),</span>
+          <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">))]</span>
+<span class="n">S</span> <span class="o">+=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">S</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Mix signals</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+<span class="c1"># Apply ICA</span>
+<span class="n">ica</span> <span class="o">=</span> <span class="n">FastICA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">S_ica</span> <span class="o">=</span> <span class="n">ica</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Plot results</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Original Signals&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">S_ica</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Recovered Signals (ICA)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/22b8f57b103cfb247a132e690e8ab4e3693633b2388b1943b4c07cc028a6eb96.png" src="../_images/22b8f57b103cfb247a132e690e8ab4e3693633b2388b1943b4c07cc028a6eb96.png" />
+</div>
+</div>
+</section>
+<section id="isomap-and-multidimensional-scaling-mds">
+<h3>3.2 Isomap and Multidimensional Scaling (MDS)<a class="headerlink" href="#isomap-and-multidimensional-scaling-mds" title="Link to this heading">#</a></h3>
+<section id="id13">
+<h4>Explanation<a class="headerlink" href="#id13" title="Link to this heading">#</a></h4>
+<p>Isomap and Multidimensional Scaling (MDS) are nonlinear dimensionality reduction techniques used to embed high-dimensional data into a lower-dimensional space while preserving the geometric structure or pairwise distances.</p>
+<ul class="simple">
+<li><p><strong>Isomap</strong>: Enhances classical MDS by preserving geodesic distances (shortest paths on the data manifold). It uses a k-nearest neighbors graph to compute geodesic distances.</p></li>
+<li><p><strong>MDS</strong>: Attempts to preserve pairwise distances or dissimilarities in the reduced space.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="key-steps-for-isomap">
+<h4>Key Steps for Isomap<a class="headerlink" href="#key-steps-for-isomap" title="Link to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p>Construct a k-nearest neighbors graph from the data.</p></li>
+<li><p>Compute geodesic distances between all pairs of data points using shortest path algorithms (e.g., Dijkstra’s or Floyd-Warshall).</p></li>
+<li><p>Apply classical MDS to the geodesic distance matrix to obtain the lower-dimensional embedding.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="formula-for-mds">
+<h4>Formula for MDS<a class="headerlink" href="#formula-for-mds" title="Link to this heading">#</a></h4>
+<p>Classical MDS minimizes the stress function:
+<span class="math notranslate nohighlight">\( \text{Stress}(X) = \sum_{i &lt; j} \left( d_{ij} - \|x_i - x_j\| \right)^2\)</span>
+Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(d_{ij}\)</span>: Distance between points (i) and (j) in the original space.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\|x_i - x_j\|\)</span>: Distance between projected points in the reduced space.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="multi-dimensional-scaling-mds-a-complete-example">
+<h2>🌐 Multi-Dimensional Scaling (MDS) – A Complete Example<a class="headerlink" href="#multi-dimensional-scaling-mds-a-complete-example" title="Link to this heading">#</a></h2>
+<section id="what-is-mds">
+<h3>📌 What is MDS?<a class="headerlink" href="#what-is-mds" title="Link to this heading">#</a></h3>
+<p><strong>Multi-Dimensional Scaling (MDS)</strong> is a dimensionality reduction technique that takes a <strong>distance matrix</strong> (or dissimilarity matrix) as input and finds a <strong>low-dimensional representation</strong> of the data where the <strong>distances between points</strong> are preserved as closely as possible.</p>
+<p>It is useful when we know how far objects are from each other but do not know their exact positions.</p>
+</section>
+<hr class="docutils" />
+<section id="example-4-cities-and-pairwise-distances">
+<h3>🧮 Example: 4 Cities and Pairwise Distances<a class="headerlink" href="#example-4-cities-and-pairwise-distances" title="Link to this heading">#</a></h3>
+<p>Suppose we have 4 cities, and we know the pairwise distances between them in kilometers:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>A</p></th>
+<th class="head"><p>B</p></th>
+<th class="head"><p>C</p></th>
+<th class="head"><p>D</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>A</strong></p></td>
+<td><p>0</p></td>
+<td><p>2</p></td>
+<td><p>6</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>B</strong></p></td>
+<td><p>2</p></td>
+<td><p>0</p></td>
+<td><p>5</p></td>
+<td><p>9</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>C</strong></p></td>
+<td><p>6</p></td>
+<td><p>5</p></td>
+<td><p>0</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>D</strong></p></td>
+<td><p>10</p></td>
+<td><p>9</p></td>
+<td><p>4</p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>This is our <strong>distance matrix</strong>.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="goal">
+<h2>🧠 Goal<a class="headerlink" href="#goal" title="Link to this heading">#</a></h2>
+<p>Find a 2D representation of these cities so that the Euclidean distances between them approximate the original distances.</p>
+</section>
+<hr class="docutils" />
+<section id="how-mds-works">
+<h2>🔍 How MDS Works<a class="headerlink" href="#how-mds-works" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Start with a dissimilarity matrix (pairwise distances).</p></li>
+<li><p>MDS finds coordinates in 2D (or any target dimension) that best preserve these distances.</p></li>
+<li><p>Output is a set of points that can be plotted to visualize relative positions.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="python-code-applying-mds">
+<h2>🛠️ Python Code: Applying MDS<a class="headerlink" href="#python-code-applying-mds" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.manifold</span><span class="w"> </span><span class="kn">import</span> <span class="n">MDS</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Distance matrix</span>
+<span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">cities</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">]</span>
+
+<span class="c1"># Apply MDS to project into 2D</span>
+<span class="n">mds</span> <span class="o">=</span> <span class="n">MDS</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dissimilarity</span><span class="o">=</span><span class="s1">&#39;precomputed&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">coords</span> <span class="o">=</span> <span class="n">mds</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>
+
+<span class="c1"># Plot the result</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+
+<span class="c1"># Label points</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">city</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cities</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">coords</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">city</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;2D Projection using MDS&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X axis&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Y axis&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+
+
+<span class="c1">#### Example: Applying Isomap</span>
+<span class="err">```</span><span class="n">python</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.manifold</span><span class="w"> </span><span class="kn">import</span> <span class="n">Isomap</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_swiss_roll</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Generate synthetic Swiss roll data</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_swiss_roll</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+
+<span class="c1"># Apply Isomap</span>
+<span class="n">isomap</span> <span class="o">=</span> <span class="n">Isomap</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">X_isomap</span> <span class="o">=</span> <span class="n">isomap</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Plot results</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Spectral&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Original Data (Swiss Roll)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_isomap</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_isomap</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Spectral&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Isomap Projection&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/57bb8dbec58afd6d9624e55c83ea87e631e7c81c8d166d244d771cda2600bf22.png" src="../_images/57bb8dbec58afd6d9624e55c83ea87e631e7c81c8d166d244d771cda2600bf22.png" />
+</div>
+</div>
+<p>Example: Applying MDS</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.manifold</span><span class="w"> </span><span class="kn">import</span> <span class="n">MDS</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Generate synthetic data</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Apply MDS</span>
+<span class="n">mds</span> <span class="o">=</span> <span class="n">MDS</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X_mds</span> <span class="o">=</span> <span class="n">mds</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Plot results</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_mds</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_mds</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;MDS Projection&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Component 1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Component 2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/112f879dc050c45db9e3ae1c6ca34a49b3966b716f1a072a4f3b6952a903fdc5.png" src="../_images/112f879dc050c45db9e3ae1c6ca34a49b3966b716f1a072a4f3b6952a903fdc5.png" />
+</div>
+</div>
+<p>Visualization
+Both Isomap and MDS enable visualizing complex high-dimensional data in a lower-dimensional space while preserving the geometric relationships:</p>
+<p>Isomap is particularly useful for manifold learning and preserving nonlinear structures.
+MDS is versatile for distance-preserving projections.
+These methods are commonly used in exploratory data analysis to gain insights into the underlying structure of the data.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="kernel-principal-component-analysis-kernel-pca">
+<h1>Kernel Principal Component Analysis (Kernel PCA)<a class="headerlink" href="#kernel-principal-component-analysis-kernel-pca" title="Link to this heading">#</a></h1>
+<p>Kernel Principal Component Analysis (Kernel PCA) is a <strong>nonlinear extension</strong> of Principal Component Analysis (PCA) that allows for <strong>dimensionality reduction</strong> in cases where the relationship among data is nonlinear. This is achieved by implicitly mapping the original data into a <strong>higher-dimensional feature space</strong> using a <strong>kernel function</strong>, and then performing linear PCA in this new space.</p>
+<hr class="docutils" />
+<section id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Link to this heading">#</a></h2>
+<p>Linear PCA fails to capture nonlinear structures in data because it relies on the variance of features in the original input space. Kernel PCA addresses this limitation by:</p>
+<ul class="simple">
+<li><p>Mapping data to a high-dimensional space where linear separation is possible.</p></li>
+<li><p>Computing principal components in this transformed space without explicitly computing the mapping, using <strong>kernel trick</strong>.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="mathematical-formulation">
+<h2>Mathematical Formulation<a class="headerlink" href="#mathematical-formulation" title="Link to this heading">#</a></h2>
+<p>Let <span class="math notranslate nohighlight">\( \mathbf{x}_1, \mathbf{x}_2, \dots, \mathbf{x}_n \in \mathbb{R}^d \)</span> be the input data points.</p>
+<section id="nonlinear-mapping-to-feature-space">
+<h3>1. Nonlinear Mapping to Feature Space<a class="headerlink" href="#nonlinear-mapping-to-feature-space" title="Link to this heading">#</a></h3>
+<p>Map the data using a nonlinear function:</p>
+<div class="math notranslate nohighlight">
+\[
+\phi: \mathbb{R}^d \to \mathcal{F}, \quad \mathbf{x}_i \mapsto \phi(\mathbf{x}_i)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\( \mathcal{F}\)</span> is a (possibly infinite-dimensional) Hilbert space.</p>
+</section>
+<section id="compute-the-kernel-matrix">
+<h3>2. Compute the Kernel Matrix<a class="headerlink" href="#compute-the-kernel-matrix" title="Link to this heading">#</a></h3>
+<p>Define a kernel function <span class="math notranslate nohighlight">\( k(\mathbf{x}_i, \mathbf{x}_j) = \langle \phi(\mathbf{x}_i), \phi(\mathbf{x}_j) \rangle \)</span>.</p>
+<p>The kernel matrix <span class="math notranslate nohighlight">\( \mathbf{K} \in \mathbb{R}^{n \times n} \)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{K}_{ij} = k(\mathbf{x}_i, \mathbf{x}_j)
+\]</div>
+</section>
+<section id="center-the-kernel-matrix">
+<h3>3. Center the Kernel Matrix<a class="headerlink" href="#center-the-kernel-matrix" title="Link to this heading">#</a></h3>
+<p>Center the kernel matrix in feature space:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{K}_{\text{centered}} = \mathbf{K} - \mathbf{1}_n \mathbf{K} - \mathbf{K} \mathbf{1}_n + \mathbf{1}_n \mathbf{K} \mathbf{1}_n
+\]</div>
+<p>where <span class="math notranslate nohighlight">\( \mathbf{1}_n \)</span> is an <span class="math notranslate nohighlight">\( n \times n \)</span> matrix with all entries equal to <span class="math notranslate nohighlight">\( \frac{1}{n} \)</span>.</p>
+<section id="what-actually-needs-to-be-done">
+<h4>📌 What Actually Needs to Be Done<a class="headerlink" href="#what-actually-needs-to-be-done" title="Link to this heading">#</a></h4>
+<p>To properly center in <strong>feature space</strong>, the new kernel entries must be:</p>
+<div class="math notranslate nohighlight">
+\[
+k_{\text{centered}}(\mathbf{x}_i, \mathbf{x}_j) = \langle \phi(\mathbf{x}_i) - \bar{\phi}, \, \phi(\mathbf{x}_j) - \bar{\phi} \rangle
+\]</div>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[
+\bar{\phi} = \frac{1}{n} \sum_{i=1}^n \phi(\mathbf{x}_i)
+\]</div>
+<p>is the <strong>mean of the data in the feature space</strong>.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="expanding-the-inner-product">
+<h3>🔍 Expanding the Inner Product<a class="headerlink" href="#expanding-the-inner-product" title="Link to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[
+k_{\text{centered}}(\mathbf{x}_i, \mathbf{x}_j)
+= \langle \phi(\mathbf{x}_i), \phi(\mathbf{x}_j) \rangle
+- \langle \bar{\phi}, \phi(\mathbf{x}_i) \rangle
+- \langle \bar{\phi}, \phi(\mathbf{x}_j) \rangle
++ \langle \bar{\phi}, \bar{\phi} \rangle
+\]</div>
+<p>Each of these terms is an <strong>inner product</strong> in the feature space, which can be computed using the kernel function ( k(\cdot, \cdot) ), avoiding explicit computation of ( \phi(\cdot) ).</p>
+</section>
+<hr class="docutils" />
+<section id="final-centered-kernel-matrix">
+<h3>✅ Final Centered Kernel Matrix<a class="headerlink" href="#final-centered-kernel-matrix" title="Link to this heading">#</a></h3>
+<p>This leads to the following formula for centering the kernel matrix:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{K}_{\text{centered}} = \mathbf{K} - \mathbf{1}_n \mathbf{K} - \mathbf{K} \mathbf{1}_n + \mathbf{1}_n \mathbf{K} \mathbf{1}_n
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( \mathbf{K} \)</span> is the original kernel matrix</p></li>
+<li><p><span class="math notranslate nohighlight">\( \mathbf{1}_n\)</span> is an <span class="math notranslate nohighlight">\( n \times n \)</span> matrix with all elements equal to <span class="math notranslate nohighlight">\( \frac{1}{n} \)</span></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="what-this-formula-does">
+<h3>⚙️ What This Formula Does<a class="headerlink" href="#what-this-formula-does" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Subtracts the mean of each row and column</strong> from the kernel matrix</p></li>
+<li><p><strong>Adds back the overall mean</strong> (since it’s subtracted twice)</p></li>
+<li><p><strong>Centers the data in the feature space</strong>, without ever computing ( \phi(\cdot) ) explicitly (thanks to the <strong>kernel trick</strong>)</p></li>
+</ul>
+</section>
+<section id="solve-the-eigenvalue-problem">
+<h3>4. Solve the Eigenvalue Problem<a class="headerlink" href="#solve-the-eigenvalue-problem" title="Link to this heading">#</a></h3>
+<p>Find eigenvalues <span class="math notranslate nohighlight">\( \lambda\)</span> and eigenvectors <span class="math notranslate nohighlight">\( \mathbf{v} \in \mathbb{R}^n \)</span> of the centered kernel matrix:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{K}_{\text{centered}} \mathbf{v} = \lambda \mathbf{v}
+\]</div>
+<p>Normalize eigenvectors such that:</p>
+<div class="math notranslate nohighlight">
+\[
+\lambda \, \mathbf{v}^\top \mathbf{v} = 1
+\]</div>
+</section>
+<section id="project-new-data-points">
+<h3>5. Project New Data Points<a class="headerlink" href="#project-new-data-points" title="Link to this heading">#</a></h3>
+<p>To project a new data point <span class="math notranslate nohighlight">\( \mathbf{x} \)</span> onto the <span class="math notranslate nohighlight">\(k \)</span>-th principal component:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{PC}_k(\mathbf{x}) = \sum_{i=1}^n v_i^{(k)} \, k(\mathbf{x}_i, \mathbf{x})
+\]</div>
+<p>where <span class="math notranslate nohighlight">\( \mathbf{v}^{(k)} \)</span> is the <span class="math notranslate nohighlight">\( k \)</span>-th normalized eigenvector.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="common-kernels">
+<h2>Common Kernels<a class="headerlink" href="#common-kernels" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Linear Kernel:</strong> <span class="math notranslate nohighlight">\( k(\mathbf{x}, \mathbf{y}) = \mathbf{x}^\top \mathbf{y} \)</span></p></li>
+<li><p><strong>Polynomial Kernel:</strong> <span class="math notranslate nohighlight">\(k(\mathbf{x}, \mathbf{y}) = (\mathbf{x}^\top \mathbf{y} + c)^d \)</span></p></li>
+<li><p><strong>Gaussian (RBF) Kernel:</strong> <span class="math notranslate nohighlight">\( k(\mathbf{x}, \mathbf{y}) = \exp\left(-\frac{\|\mathbf{x} - \mathbf{y}\|^2}{2\sigma^2}\right) \)</span></p></li>
+<li><p><strong>Sigmoid Kernel:</strong> <span class="math notranslate nohighlight">\( k(\mathbf{x}, \mathbf{y}) = \tanh(\alpha \mathbf{x}^\top \mathbf{y} + c) \)</span></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>Kernel PCA enables:</p>
+<ul class="simple">
+<li><p><strong>Nonlinear dimensionality reduction</strong></p></li>
+<li><p><strong>Capturing complex data structures</strong></p></li>
+<li><p><strong>Working in high-dimensional space without explicitly computing it (via kernel trick)</strong></p></li>
+</ul>
+<p>It is widely used in pattern recognition, denoising, and feature extraction in machine learning tasks where linear PCA is insufficient.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Import libraries</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_circles</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">KernelPCA</span>
+
+<span class="c1"># 2. Generate nonlinear data</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_circles</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># 3. Plot original data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Original Data (Non-linear)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;X2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># 4. Apply Kernel PCA with RBF kernel</span>
+<span class="n">kpca</span> <span class="o">=</span> <span class="n">KernelPCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">X_kpca</span> <span class="o">=</span> <span class="n">kpca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># 5. Plot transformed data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_kpca</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_kpca</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Transformed Data with Kernel PCA (RBF Kernel)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;PC1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;PC2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cf6295137137b3c9c66f0a205779c9dbd225fa00d668e3329dea61952af4b0f5.png" src="../_images/cf6295137137b3c9c66f0a205779c9dbd225fa00d668e3329dea61952af4b0f5.png" />
+<img alt="../_images/bd1f5c19546494118cb8432e93403ec676c6fa770f3cc06c46b6e61178bfcacf.png" src="../_images/bd1f5c19546494118cb8432e93403ec676c6fa770f3cc06c46b6e61178bfcacf.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./_sources"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="comprehensive-guide-on-feature-selection.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><strong>Comprehensive Guide on Feature Selection</strong></p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">3. Feature Extraction (featureExtraction.ipynb)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-extraction-methods">Feature Extraction Methods</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-extraction-linear-methods">Feature Extraction: Linear Methods</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#principal-component-analysis-pca">1. Principal Component Analysis (PCA)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation">Explanation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-steps">Key Steps</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formula">Formula</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-explanation-and-implementation-of-pca">📚Mathematical Explanation and Implementation of PCA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-steps-of-pca">Mathematical Steps of PCA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-mathematics">Step-by-Step Mathematics</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-standardize-the-data">Step 1: Standardize the Data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-compute-the-covariance-matrix">Step 2: Compute the Covariance Matrix</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-compute-eigenvalues-and-eigenvectors">Step 3: Compute Eigenvalues and Eigenvectors</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-example">Python Example:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-sort-eigenvectors-by-decreasing-eigenvalues">Step 4: Sort Eigenvectors by Decreasing Eigenvalues</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#procedure">Procedure:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Python Example:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-select-the-top-k-eigenvectors">Step 5: Select the Top <span class="math notranslate nohighlight">\(k\)</span> Eigenvectors</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-k">Choosing <span class="math notranslate nohighlight">\(k\)</span>:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Python Example:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-project-the-data">Step 6: Project the Data</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Python Example:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-7-optional-reconstruct-the-original-data-inverse-transform">Step 7: (Optional) Reconstruct the Original Data (Inverse Transform)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Python Example:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-discriminant-analysis-lda">2. Linear Discriminant Analysis (LDA)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Explanation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#goal-of-lda">Goal of LDA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Key Steps</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Formula</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-implementation">Step by step implementation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-define-mean-vectors">Step 1: Define Mean Vectors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-compute-scatter-matrices">Step 2: Compute Scatter Matrices</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#within-class-scatter-matrix-s-w">2.1. Within-class Scatter Matrix ( S_W )</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#between-class-scatter-matrix-s-b">2.2. Between-class Scatter Matrix ( S_B )</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-solve-the-generalized-eigenvalue-problem">Step 3: Solve the Generalized Eigenvalue Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-select-linear-discriminants">Step 4: Select Linear Discriminants</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#important-notes">Important Notes:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-discriminant-analysis-lda-optimization-derivation-details">Linear Discriminant Analysis (LDA) Optimization Derivation details</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective-function">Objective function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-with-direct-maximization">Problem with direct maximization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formulating-the-lagrangian">Formulating the Lagrangian</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taking-the-derivative">Taking the derivative</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generalized-eigenvalue-problem">Generalized eigenvalue problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-compute-w">How to compute <span class="math notranslate nohighlight">\( w \)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Important notes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nonlinear-methods">3. Nonlinear Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#independent-component-analysis-ica">3.1 Independent Component Analysis (ICA)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Explanation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Key Steps</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Formula</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-derivation">📘 Mathematical Derivation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ica-model-linear-mixture">1. ICA Model: Linear Mixture</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions">2. Assumptions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-centering-and-whitening">3. Preprocessing: Centering and Whitening</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-centering">a. Centering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-whitening">b. Whitening</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective-maximize-non-gaussianity">4. Objective: Maximize Non-Gaussianity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measure-of-non-gaussianity-negentropy">5. Measure of Non-Gaussianity: Negentropy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approximate-negentropy-fastica">6. Approximate Negentropy (FastICA)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fastica-algorithm-one-component">7. FastICA Algorithm (One Component)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extracting-multiple-components">8. Extracting Multiple Components</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-output">✅ Final Output</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-table">📌 Summary Table</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#isomap-and-multidimensional-scaling-mds">3.2 Isomap and Multidimensional Scaling (MDS)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Explanation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#key-steps-for-isomap">Key Steps for Isomap</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#formula-for-mds">Formula for MDS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-dimensional-scaling-mds-a-complete-example">🌐 Multi-Dimensional Scaling (MDS) – A Complete Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-mds">📌 What is MDS?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-4-cities-and-pairwise-distances">🧮 Example: 4 Cities and Pairwise Distances</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goal">🧠 Goal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-mds-works">🔍 How MDS Works</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-code-applying-mds">🛠️ Python Code: Applying MDS</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-principal-component-analysis-kernel-pca">Kernel Principal Component Analysis (Kernel PCA)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-formulation">Mathematical Formulation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nonlinear-mapping-to-feature-space">1. Nonlinear Mapping to Feature Space</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-kernel-matrix">2. Compute the Kernel Matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#center-the-kernel-matrix">3. Center the Kernel Matrix</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-actually-needs-to-be-done">📌 What Actually Needs to Be Done</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expanding-the-inner-product">🔍 Expanding the Inner Product</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-centered-kernel-matrix">✅ Final Centered Kernel Matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-this-formula-does">⚙️ What This Formula Does</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solve-the-eigenvalue-problem">4. Solve the Eigenvalue Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#project-new-data-points">5. Project New Data Points</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-kernels">Common Kernels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Soheila Ashkezari-T.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
